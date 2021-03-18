@@ -7,13 +7,13 @@ name=DXF to Shapes
 qgisMinimumVersion=3.0
 description=Ce plugin exporte les dxf des DFT au format shape attendu par ORANGE
 version=0.1
-author=Circet
+author=Simon Ducournau
 email=simon.ducournau@circet.fr
 
 about=Ce plugin exporte les dxf des DFT au format shape attendu par ORANGE
 
-tracker=http://bugs
-repository=http://repo
+tracker=https://github.com/sducournau/dxf_to_shapes
+repository=https://qgis.repo.imago-data.com
 # End of mandatory metadata
 
 # Recommended items:
@@ -25,7 +25,7 @@ hasProcessingProvider=no
 # Tags are comma separated with spaces allowed
 tags=python
 
-homepage=http://homepage
+homepage=https://github.com/sducournau/dxf_to_shapes
 category=Plugins
 icon=icon.png
 # experimental flag
@@ -44,4 +44,3 @@ Category of the plugin: Raster, Vector, Database or Web
 
 # If the plugin can run on QGIS Server.
 server=False
-

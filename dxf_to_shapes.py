@@ -30,7 +30,7 @@ from qgis.PyQt.QtWidgets import *
 from qgis.core import *
 from processing.modeler.ModelerDialog import ModelerDialog
 import processing
-from dxf_to_shapes.models import dxf_to_shapes_model_aer, dxf_to_shapes_model_gc
+from .models import dxf_to_shapes_model_aer, dxf_to_shapes_model_gc
 import re
 from zipfile import ZipFile
 # Initialize Qt resources from file resources.py
