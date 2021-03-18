@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/dxf_to_shapes" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
