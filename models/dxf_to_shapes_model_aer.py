@@ -561,10 +561,37 @@ class Dxf_to_shapeVersionAer(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
+
+
+
+        alg_params = {
+            'INPUT': results['export_cable'],
+            'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
+        }
+        outputs['extractvertices'] = processing.run('qgis:extractvertices', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+
+
+
+        alg_params = {
+            'DISCARD_NONMATCHING': False,
+            'INPUT': outputs['extractvertices']['OUTPUT'],
+            'JOIN': outputs['SupprimerChamps']['OUTPUT'],
+            'JOIN_FIELDS': ['type'],
+            'METHOD': 0,
+            'PREDICATE': [0],
+            'PREFIX': '',
+            'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
+        }
+        outputs['PtAttributs_vertices'] = processing.run('native:joinattributesbylocation', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+
+
+
+
+
         # PT attributs
         alg_params = {
             'DISCARD_NONMATCHING': False,
-            'INPUT': outputs['SupprimerChamps']['OUTPUT'],
+            'INPUT': outputs['PtAttributs_vertices']['OUTPUT'],
             'JOIN': outputs['JoindreType_pt']['OUTPUT'],
             'JOIN_FIELDS': ['insee_Text','type_pt_Text','Text'],
             'METHOD': 0,
@@ -597,7 +624,7 @@ class Dxf_to_shapeVersionAer(QgsProcessingAlgorithm):
 
         # Refactoriser les champs PT
         alg_params = {
-            'FIELDS_MAPPING': [{'expression': '\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\"type\"','length': 50,'name': 'type','precision': 0,'type': 10}],
+            'FIELDS_MAPPING': [{'expression': '\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\"type\"','length': 50,'name': 'type','precision': 0,'type': 10},{'expression': '\"Text\"','length': 50,'name': 'numero','precision': 0,'type': 10}],
             'INPUT': outputs['PtAttributs']['OUTPUT'],
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }

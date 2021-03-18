@@ -386,7 +386,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
 
         # Refactoriser les champs
         alg_params = {
-            'FIELDS_MAPPING': [{'expression': "var('refcommande')",'length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\'FT_CHOPE\'','length': 50,'name': 'type','precision': 0,'type': 10}],
+            'FIELDS_MAPPING': [{'expression': '\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\'FT_CHOPE\'','length': 50,'name': 'type','precision': 0,'type': 10}],
             'INPUT': outputs['ExtraireLesSommetsGcor']['OUTPUT'],
             'OUTPUT': parameters['export_support_gcor']
         }
@@ -428,7 +428,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
 
         # Refactoriser les champs ORANGE Creation
         alg_params = {
-            'FIELDS_MAPPING': [{'expression': "var('refcommande')",'length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\'FT_APPUIMOD\'','length': 50,'name': 'type','precision': 0,'type': 10}],
+            'FIELDS_MAPPING': [{'expression': '\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\'FT_APPUIMOD\'','length': 50,'name': 'type','precision': 0,'type': 10}],
             'INPUT': outputs['IntersectionsDeLignesAthd']['OUTPUT'],
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
@@ -472,7 +472,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
 
         # Refactoriser les champs ORANGE
         alg_params = {
-            'FIELDS_MAPPING': [{'expression': "var('refcommande')",'length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\'FT_APPUI\'','length': 50,'name': 'type','precision': 0,'type': 10}],
+            'FIELDS_MAPPING': [{'expression':'\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\'FT_APPUI\'','length': 50,'name': 'type','precision': 0,'type': 10}],
             'INPUT': outputs['IntersectionsDeLignesOrange']['OUTPUT'],
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
