@@ -52,7 +52,13 @@ class Dxf_to_shapeVersionAer(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Emprise
+
+
+        feedback.setCurrentStep(2)
+        if feedback.isCanceled():
+            return {}
+
+
         alg_params = {
             'INPUT': outputs['ExtraireCables']['FAIL_OUTPUT'],
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT

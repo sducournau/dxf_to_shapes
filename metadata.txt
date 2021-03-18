@@ -6,7 +6,7 @@
 name=DXF to Shapes
 qgisMinimumVersion=3.0
 description=Ce plugin exporte les dxf des DFT au format shape attendu par ORANGE
-version=0.1
+version=1.0
 author=Simon Ducournau
 email=simon.ducournau@circet.fr
 

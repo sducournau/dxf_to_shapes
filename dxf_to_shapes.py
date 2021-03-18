@@ -378,9 +378,9 @@ class DxfToShapes:
                 'OUTPUT': folder + '\\ORANGE\\' + 'support.shp'
             }
             outputs['support'] = processing.run('native:refactorfields', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
-            cable = QgsVectorLayer(outputs['support']['OUTPUT'], 'support', 'ogr')
-            utils.PROJECT.addMapLayer(cable, False)
-            utils.GROUP_LAYER_ORANGE.insertChildNode(0, QgsLayerTreeLayer(cable))
+            support = QgsVectorLayer(outputs['support']['OUTPUT'], 'support', 'ogr')
+            utils.PROJECT.addMapLayer(support, False)
+            utils.GROUP_LAYER_ORANGE.insertChildNode(0, QgsLayerTreeLayer(support))
 
 
             alg_params = {
@@ -418,9 +418,9 @@ class DxfToShapes:
                         'OUTPUT': folder + '\\ORANGE\\' + 'support_gcor.shp'
                     }
                     outputs['support_gcor'] = processing.run('native:refactorfields', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
-                    export_support_gcor = QgsVectorLayer(outputs['support_gcor']['OUTPUT'], 'support', 'ogr')
-                    utils.PROJECT.addMapLayer(export_support_gcor, False)
-                    utils.GROUP_LAYER_ORANGE.insertChildNode(0, QgsLayerTreeLayer(export_support_gcor))
+                    support_gcor = QgsVectorLayer(outputs['support_gcor']['OUTPUT'], 'support', 'ogr')
+                    utils.PROJECT.addMapLayer(support_gcor, False)
+                    utils.GROUP_LAYER_ORANGE.insertChildNode(0, QgsLayerTreeLayer(support_gcor))
 
 
             if export_cable_gcor.featureCount() > 0:
@@ -434,6 +434,10 @@ class DxfToShapes:
                 cable_gcor = QgsVectorLayer(outputs['support_gcor']['OUTPUT'], 'support', 'ogr')
                 utils.PROJECT.addMapLayer(cable_gcor, False)
                 utils.GROUP_LAYER_ORANGE.insertChildNode(0, QgsLayerTreeLayer(cable_gcor))
+
+
+
+
 
             archive = folder + '\\ORANGE\\' + utils.GROUP_NAME + '.zip'
             self.create_zip(folder + '\\ORANGE\\', archive)

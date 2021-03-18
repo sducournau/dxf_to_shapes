@@ -1,20 +1,20 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyAlgorithm="0" simplifyDrawingTol="1" simplifyMaxScale="1" version="3.16.1-Hannover" minScale="100000000" readOnly="0" simplifyLocal="1" styleCategories="AllStyleCategories" maxScale="0" hasScaleBasedVisibilityFlag="0" labelsEnabled="0" simplifyDrawingHints="0">
+<qgis simplifyAlgorithm="0" minScale="100000000" hasScaleBasedVisibilityFlag="0" simplifyDrawingTol="1" simplifyLocal="1" labelsEnabled="0" maxScale="0" simplifyMaxScale="1" version="3.16.1-Hannover" simplifyDrawingHints="0" styleCategories="AllStyleCategories" readOnly="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <temporal fixedDuration="0" startField="" durationUnit="min" endField="" mode="0" startExpression="" durationField="" endExpression="" enabled="0" accumulate="0">
+  <temporal endField="" startField="" endExpression="" durationUnit="min" mode="0" enabled="0" fixedDuration="0" accumulate="0" durationField="" startExpression="">
     <fixedRange>
       <start></start>
       <end></end>
     </fixedRange>
   </temporal>
-  <renderer-v2 enableorderby="0" symbollevels="0" forceraster="0" type="singleSymbol">
+  <renderer-v2 symbollevels="0" forceraster="0" type="singleSymbol" enableorderby="0">
     <symbols>
-      <symbol force_rhr="0" alpha="1" clip_to_extent="1" name="0" type="marker">
-        <layer pass="0" class="SimpleMarker" enabled="1" locked="0">
+      <symbol force_rhr="0" alpha="1" name="0" clip_to_extent="1" type="marker">
+        <layer locked="0" pass="0" enabled="1" class="SimpleMarker">
           <prop v="0" k="angle"/>
           <prop v="255,0,0,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -29,19 +29,19 @@
           <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
           <prop v="MM" k="outline_width_unit"/>
           <prop v="diameter" k="scale_method"/>
-          <prop v="6" k="size"/>
+          <prop v="7" k="size"/>
           <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
           <prop v="MM" k="size_unit"/>
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option name="name" type="QString" value=""/>
               <Option name="properties"/>
-              <Option value="collection" name="type" type="QString"/>
+              <Option name="type" type="QString" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
-        <layer pass="0" class="FontMarker" enabled="1" locked="0">
+        <layer locked="0" pass="0" enabled="1" class="FontMarker">
           <prop v="0" k="angle"/>
           <prop v="A" k="chr"/>
           <prop v="255,255,255,255" k="color"/>
@@ -49,28 +49,28 @@
           <prop v="Bold" k="font_style"/>
           <prop v="1" k="horizontal_anchor_point"/>
           <prop v="bevel" k="joinstyle"/>
-          <prop v="0,0" k="offset"/>
+          <prop v="0,-0.69999999999999996" k="offset"/>
           <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
           <prop v="MM" k="offset_unit"/>
           <prop v="35,35,35,255" k="outline_color"/>
           <prop v="0" k="outline_width"/>
           <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
           <prop v="MM" k="outline_width_unit"/>
-          <prop v="4" k="size"/>
+          <prop v="4.66667" k="size"/>
           <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
           <prop v="MM" k="size_unit"/>
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option name="name" type="QString" value=""/>
               <Option name="properties" type="Map">
                 <Option name="char" type="Map">
-                  <Option value="true" name="active" type="bool"/>
-                  <Option value="&quot;type&quot;" name="expression" type="QString"/>
-                  <Option value="3" name="type" type="int"/>
+                  <Option name="active" type="bool" value="true"/>
+                  <Option name="expression" type="QString" value="&quot;type&quot;"/>
+                  <Option name="type" type="int" value="3"/>
                 </Option>
               </Option>
-              <Option value="collection" name="type" type="QString"/>
+              <Option name="type" type="QString" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -88,11 +88,12 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory penAlpha="255" lineSizeScale="3x:0,0,0,0,0,0" scaleDependency="Area" minScaleDenominator="0" sizeScale="3x:0,0,0,0,0,0" rotationOffset="270" maxScaleDenominator="1e+08" backgroundColor="#ffffff" direction="0" spacing="5" barWidth="5" width="15" penWidth="0" opacity="1" minimumSize="0" showAxis="1" backgroundAlpha="255" spacingUnit="MM" enabled="0" diagramOrientation="Up" height="15" penColor="#000000" spacingUnitScale="3x:0,0,0,0,0,0" scaleBasedVisibility="0" labelPlacementMethod="XHeight" sizeType="MM" lineSizeType="MM">
+    <DiagramCategory spacingUnit="MM" backgroundAlpha="255" minimumSize="0" penWidth="0" penColor="#000000" width="15" direction="0" spacing="5" scaleDependency="Area" diagramOrientation="Up" rotationOffset="270" opacity="1" minScaleDenominator="0" backgroundColor="#ffffff" spacingUnitScale="3x:0,0,0,0,0,0" barWidth="5" lineSizeScale="3x:0,0,0,0,0,0" showAxis="1" sizeScale="3x:0,0,0,0,0,0" labelPlacementMethod="XHeight" scaleBasedVisibility="0" height="15" sizeType="MM" maxScaleDenominator="1e+08" enabled="0" penAlpha="255" lineSizeType="MM">
       <fontProperties style="" description="MS Shell Dlg 2,7.8,-1,5,50,0,0,0,0,0"/>
+      <attribute field="" color="#000000" label=""/>
       <axisSymbol>
-        <symbol force_rhr="0" alpha="1" clip_to_extent="1" name="" type="line">
-          <layer pass="0" class="SimpleLine" enabled="1" locked="0">
+        <symbol force_rhr="0" alpha="1" name="" clip_to_extent="1" type="line">
+          <layer locked="0" pass="0" enabled="1" class="SimpleLine">
             <prop v="0" k="align_dash_pattern"/>
             <prop v="square" k="capstyle"/>
             <prop v="5;2" k="customdash"/>
@@ -116,9 +117,9 @@
             <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
             <data_defined_properties>
               <Option type="Map">
-                <Option value="" name="name" type="QString"/>
+                <Option name="name" type="QString" value=""/>
                 <Option name="properties"/>
-                <Option value="collection" name="type" type="QString"/>
+                <Option name="type" type="QString" value="collection"/>
               </Option>
             </data_defined_properties>
           </layer>
@@ -126,12 +127,12 @@
       </axisSymbol>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings zIndex="0" dist="0" placement="0" showAll="1" priority="0" linePlacementFlags="18" obstacle="0">
+  <DiagramLayerSettings placement="0" zIndex="0" priority="0" obstacle="0" dist="0" linePlacementFlags="18" showAll="1">
     <properties>
       <Option type="Map">
-        <Option value="" name="name" type="QString"/>
+        <Option name="name" type="QString" value=""/>
         <Option name="properties"/>
-        <Option value="collection" name="type" type="QString"/>
+        <Option name="type" type="QString" value="collection"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
@@ -179,45 +180,45 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias index="0" name="" field="fid"/>
-    <alias index="1" name="" field="ref_comman"/>
-    <alias index="2" name="" field="num_siren"/>
-    <alias index="3" name="" field="operateur"/>
-    <alias index="4" name="" field="type"/>
+    <alias field="fid" name="" index="0"/>
+    <alias field="ref_comman" name="" index="1"/>
+    <alias field="num_siren" name="" index="2"/>
+    <alias field="operateur" name="" index="3"/>
+    <alias field="type" name="" index="4"/>
   </aliases>
   <defaults>
-    <default applyOnUpdate="0" expression="" field="fid"/>
-    <default applyOnUpdate="0" expression="" field="ref_comman"/>
-    <default applyOnUpdate="0" expression="" field="num_siren"/>
-    <default applyOnUpdate="0" expression="" field="operateur"/>
-    <default applyOnUpdate="0" expression="" field="type"/>
+    <default field="fid" expression="" applyOnUpdate="0"/>
+    <default field="ref_comman" expression="" applyOnUpdate="0"/>
+    <default field="num_siren" expression="" applyOnUpdate="0"/>
+    <default field="operateur" expression="" applyOnUpdate="0"/>
+    <default field="type" expression="" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="1" constraints="3" exp_strength="0" unique_strength="1" field="fid"/>
-    <constraint notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0" field="ref_comman"/>
-    <constraint notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0" field="num_siren"/>
-    <constraint notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0" field="operateur"/>
-    <constraint notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0" field="type"/>
+    <constraint field="fid" unique_strength="1" exp_strength="0" constraints="3" notnull_strength="1"/>
+    <constraint field="ref_comman" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="num_siren" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="operateur" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="type" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" desc="" field="fid"/>
-    <constraint exp="" desc="" field="ref_comman"/>
-    <constraint exp="" desc="" field="num_siren"/>
-    <constraint exp="" desc="" field="operateur"/>
-    <constraint exp="" desc="" field="type"/>
+    <constraint field="fid" exp="" desc=""/>
+    <constraint field="ref_comman" exp="" desc=""/>
+    <constraint field="num_siren" exp="" desc=""/>
+    <constraint field="operateur" exp="" desc=""/>
+    <constraint field="type" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig actionWidgetStyle="dropDown" sortOrder="0" sortExpression="">
     <columns>
-      <column width="-1" hidden="0" name="fid" type="field"/>
-      <column width="-1" hidden="0" name="ref_comman" type="field"/>
-      <column width="-1" hidden="0" name="num_siren" type="field"/>
-      <column width="-1" hidden="0" name="operateur" type="field"/>
-      <column width="-1" hidden="0" name="type" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
+      <column hidden="0" name="fid" width="-1" type="field"/>
+      <column hidden="0" name="ref_comman" width="-1" type="field"/>
+      <column hidden="0" name="num_siren" width="-1" type="field"/>
+      <column hidden="0" name="operateur" width="-1" type="field"/>
+      <column hidden="0" name="type" width="-1" type="field"/>
+      <column hidden="1" width="-1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -248,18 +249,18 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field name="fid" editable="1"/>
-    <field name="num_siren" editable="1"/>
-    <field name="operateur" editable="1"/>
-    <field name="ref_comman" editable="1"/>
-    <field name="type" editable="1"/>
+    <field editable="1" name="fid"/>
+    <field editable="1" name="num_siren"/>
+    <field editable="1" name="operateur"/>
+    <field editable="1" name="ref_comman"/>
+    <field editable="1" name="type"/>
   </editable>
   <labelOnTop>
-    <field name="fid" labelOnTop="0"/>
-    <field name="num_siren" labelOnTop="0"/>
-    <field name="operateur" labelOnTop="0"/>
-    <field name="ref_comman" labelOnTop="0"/>
-    <field name="type" labelOnTop="0"/>
+    <field labelOnTop="0" name="fid"/>
+    <field labelOnTop="0" name="num_siren"/>
+    <field labelOnTop="0" name="operateur"/>
+    <field labelOnTop="0" name="ref_comman"/>
+    <field labelOnTop="0" name="type"/>
   </labelOnTop>
   <dataDefinedFieldProperties/>
   <widgets/>
