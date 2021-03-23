@@ -68,13 +68,34 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Refactoriser les champs
+        # Extraire par expression
         alg_params = {
-            'FIELDS_MAPPING': [{'expression': '\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression':'\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10}],
+            'EXPRESSION': ' regexp_match( \"Layer\" ,\'GCOR\') > 0',
             'INPUT': outputs['ExtraireCables']['OUTPUT'],
+            'FAIL_OUTPUT': QgsProcessing.TEMPORARY_OUTPUT,
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
-        outputs['RefactoriserLesChamps'] = processing.run('native:refactorfields', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+        outputs['ExtraireParExpression'] = processing.run('native:extractbyexpression', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+
+
+        # Refactoriser les champs
+        alg_params = {
+            'FIELDS_MAPPING': [{'expression': '\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10}],
+            'INPUT': outputs['ExtraireParExpression']['OUTPUT'],
+            'OUTPUT': parameters['export_cable_gcor']
+        }
+        outputs['RefactoriserLesChamps_cable_gcor'] = processing.run('native:refactorfields', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+        results['export_cable_gcor']  = outputs['RefactoriserLesChamps_cable_gcor']['OUTPUT']
+        # Refactoriser les champs
+        alg_params = {
+            'FIELDS_MAPPING': [{'expression': '\'' + parameters['refcommande'] + '\'','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\'' + parameters['siren'] + '\'','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression': '\'' + parameters['operateur'] + '\'','length': 50,'name': 'operateur','precision': 0,'type': 10}],
+            'INPUT': outputs['ExtraireParExpression']['FAIL_OUTPUT'],
+            'OUTPUT': parameters['export_cable']
+        }
+        outputs['RefactoriserLesChamps_cable'] = processing.run('native:refactorfields', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+        results['export_cable'] = outputs['RefactoriserLesChamps_cable']['OUTPUT']
+
+
 
         feedback.setCurrentStep(3)
         if feedback.isCanceled():
@@ -86,7 +107,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
             'FIELD_NAME': 'type_point',
             'FIELD_PRECISION': 0,
             'FIELD_TYPE': 2,
-            'FORMULA': ' case\r\n when \"Text\" in (\'MM\',\'M\', \'PB\', \'PEP\', \'PA\',\'PEO\',\'PBA\',\'PBC\') and regexp_match(\"Text\",\'[0-9]\') < 1 and \"Text\" is not null then \'type_pf\'\r\n else\r\n case\r\n when length(\"Text\") = 5 and  to_real( \"Text\")\r\n then \'insee\'\r\nwhen length(\"Text\") < 4 and  regexp_match(\"Text\",\'[A-Za-z]\') > 0\r\n then \'type_pt\'\r\nwhen length(\"Text\") >= 1 and  regexp_match(\"Text\",\'[FT0-9]\') > 0\r\n then \'numero\'\r\n\r\n end\r\n end',
+            'FORMULA': ' case when \"Text\" in (\'MM\',\'M\', \'PB\', \'PEP\', \'PA\',\'PEO\',\'PBA\',\'PBC\') and regexp_match(\"Text\",\'[0-9]\') < 1 and \"Text\" is not null then \'type_pf\' else case when length(\"Text\") = 5 and regexp_match(\"Text\",\'[0-9]{5}$\') > 0 then \'insee\' when length(\"Text\") < 4 and  regexp_match(\"Text\",\'[A-Za-z]\') > 0 then \'type_pt\'  when length("Text") >= 1 and  (regexp_match(\"Text\",\'(FT)\') > 0 or regexp_match(\"Text\",\'^[0-9]+$\') > 0) then \'numero\' end end',
             'INPUT': parameters['etiquettes'],
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
@@ -183,18 +204,6 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Supprimer champ(s) cables
-        alg_params = {
-            'COLUMN': ['PaperSpace','SubClasses','Linetype','EntityHandle','Text','Layer'],
-            'INPUT': outputs['RefactoriserLesChamps']['OUTPUT'],
-            'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
-        }
-        outputs['SupprimerChampsCables'] = processing.run('qgis:deletecolumn', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
-
-        feedback.setCurrentStep(11)
-        if feedback.isCanceled():
-            return {}
-
         # Extraire Poteaux ATHD
         alg_params = {
             'FIELD': 'ratio',
@@ -234,22 +243,6 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Extraire par attribut GCOR
-        alg_params = {
-            'FIELD': 'ref_comman',
-            'INPUT': outputs['SupprimerChampsCables']['OUTPUT'],
-            'OPERATOR': 7,
-            'VALUE': 'GCOR',
-            'FAIL_OUTPUT': parameters['export_cable'],
-            'OUTPUT': parameters['export_cable_gcor']
-        }
-        outputs['ExtraireParAttributGcor'] = processing.run('native:extractbyattribute', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
-        results['export_cable'] = outputs['ExtraireParAttributGcor']['FAIL_OUTPUT']
-        results['export_cable_gcor'] = outputs['ExtraireParAttributGcor']['OUTPUT']
-
-        feedback.setCurrentStep(15)
-        if feedback.isCanceled():
-            return {}
 
         # points numero
         alg_params = {
@@ -342,7 +335,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
 
         # Extraire les sommets GCOR
         alg_params = {
-            'INPUT': outputs['ExtraireParAttributGcor']['OUTPUT'],
+            'INPUT': parameters['export_cable_gcor'],
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
         outputs['ExtraireLesSommetsGcor'] = processing.run('native:extractvertices', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
@@ -354,7 +347,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
         # Geobuffer type numero
         alg_params = {
             'DISSOLVE': False,
-            'DISTANCE': 5,
+            'DISTANCE': 10,
             'END_CAP_STYLE': 0,
             'INPUT': outputs['PointsNumero']['OUTPUT'],
             'JOIN_STYLE': 0,
@@ -401,7 +394,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
         alg_params = {
             'INPUT': outputs['ExtraireLigneAthd']['OUTPUT'],
             'INPUT_FIELDS': [''],
-            'INTERSECT': outputs['SupprimerChampsCables']['OUTPUT'],
+            'INTERSECT': parameters['export_cable'],
             'INTERSECT_FIELDS': [''],
             'INTERSECT_FIELDS_PREFIX': '',
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
@@ -459,7 +452,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
         alg_params = {
             'INPUT': outputs['ExtraireLigneOrange']['OUTPUT'],
             'INPUT_FIELDS': [''],
-            'INTERSECT': outputs['SupprimerChampsCables']['OUTPUT'],
+            'INTERSECT': parameters['export_cable'],
             'INTERSECT_FIELDS': [''],
             'INTERSECT_FIELDS_PREFIX': '',
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT

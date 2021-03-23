@@ -370,14 +370,21 @@ class DxfToShapes:
                 export_bpe.loadNamedStyle(utils.DIR_STYLES + os.sep +  'bpe.qml')
                 export_bpe.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
 
-
+            alg_params = {
+                'INPUT': export_support,
+                'EXPRESSION':'regexp_match(\"numero\",\'(FT)\') > 0',
+                'OUTPUT':  QgsProcessing.TEMPORARY_OUTPUT
+            }
+            outputs['sel_support'] = processing.run('native:extractbyexpression', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
 
             alg_params = {
                 'FIELDS_MAPPING': [{'expression':'\"ref_comman\"','length': 50,'name': 'ref_comman','precision': 0,'type': 10},{'expression': '\"num_siren\"','length': 50,'name': 'num_siren','precision': 0,'type': 10},{'expression':  '\"operateur\"','length': 50,'name': 'operateur','precision': 0,'type': 10},{'expression': '\"type\"','length': 50,'name': 'type','precision': 0,'type': 10}],
-                'INPUT': export_support,
+                'INPUT': outputs['sel_support']['OUTPUT'],
                 'OUTPUT': folder + '\\ORANGE\\' + 'support.shp'
             }
             outputs['support'] = processing.run('native:refactorfields', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
+
+
             support = QgsVectorLayer(outputs['support']['OUTPUT'], 'support', 'ogr')
             utils.PROJECT.addMapLayer(support, False)
             utils.GROUP_LAYER_ORANGE.insertChildNode(0, QgsLayerTreeLayer(support))
