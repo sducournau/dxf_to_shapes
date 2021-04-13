@@ -443,27 +443,32 @@ class DxfToShapes:
                 utils.GROUP_LAYER_ORANGE.insertChildNode(0, QgsLayerTreeLayer(cable_gcor))
 
 
-
+            archive = folder + '\\ORANGE\\' + utils.GROUP_NAME + '_GCOR.zip'
+            self.create_zip(folder + '\\ORANGE\\', archive, True)
 
 
             archive = folder + '\\ORANGE\\' + utils.GROUP_NAME + '.zip'
-            self.create_zip(folder + '\\ORANGE\\', archive)
+            self.create_zip(folder + '\\ORANGE\\', archive, False)
 
 
 
 
 
 
-    def create_zip(self,folder, archive):
+    def create_zip(self,folder, archive,gcor):
         with ZipFile(archive, 'w') as zipObj:
         # Add multiple files to the zip
 
             for folderName, subfolders, filenames in os.walk(folder):
                 for filename in filenames:
-                    if 'zip' not in filename:
-                        filePath = os.path.join(folder, filename)
-                        zipObj.write(filePath,basename(filename))
-
+                    if 'zip' not in filename and not gcor:
+                        if 'gcor' not in filename:
+                            filePath = os.path.join(folder, filename)
+                            zipObj.write(filePath,basename(filename))
+                    elif 'zip' not in filename and gcor:
+                        if 'gcor' in filename:
+                            filePath = os.path.join(folder, filename)
+                            zipObj.write(filePath,basename(filename))
 
 
     def run(self):
