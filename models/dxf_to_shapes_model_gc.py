@@ -107,7 +107,7 @@ class Dxf_to_shapeVersionGc(QgsProcessingAlgorithm):
             'FIELD_NAME': 'type_point',
             'FIELD_PRECISION': 0,
             'FIELD_TYPE': 2,
-            'FORMULA': ' case when \"Text\" in (\'MM\',\'M\', \'PB\', \'PEP\', \'PA\',\'PEO\',\'PBA\',\'PBC\') and regexp_match(\"Text\",\'[0-9]\') < 1 and \"Text\" is not null then \'type_pf\' else case when length(\"Text\") = 5 and regexp_match(\"Text\",\'[0-9]{5}$\') > 0 then \'insee\' when length(\"Text\") < 4 and  regexp_match(\"Text\",\'[A-Za-z]\') > 0 then \'type_pt\'  when length("Text") >= 1 and  (regexp_match(\"Text\",\'(FT)\') > 0 or regexp_match(\"Text\",\'^[0-9]+$\') > 0) then \'numero\' end end',
+            'FORMULA': ' case when \"Text\" in (\'MM\',\'M\', \'PB\', \'PEP\', \'PA\',\'PEO\',\'PBA\',\'PBC\') and regexp_match(\"Text\",\'[0-9]\') < 1 and \"Text\" is not null then \'type_pf\' else case when length(\"Text\") = 5 and regexp_match(\"Text\",\'[0-9]{5}$\') > 0 then \'insee\' when length(\"Text\") < 4 and  regexp_match(\"Text\",\'[A-Za-z]\') > 0 and regexp_match(\"Text\",\'(FT){1}\') = 0 then \'type_pt\'  when length("Text") >= 1 and  (regexp_match(\"Text\",\'(FT){1}\') > 0 or regexp_match(\"Text\",\'^[0-9]+$\') > 0) then \'numero\' end end',
             'INPUT': parameters['etiquettes'],
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
