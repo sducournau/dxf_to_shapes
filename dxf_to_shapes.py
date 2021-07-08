@@ -463,12 +463,13 @@ class DxfToShapes:
                 for filename in filenames:
                     if 'zip' not in filename and not gcor:
                         if 'gcor' not in filename:
-                            filePath = os.path.join(folder, filename)
+
+                            filePath = os.path.join(folder,filename )
                             zipObj.write(filePath,basename(filename))
                     elif 'zip' not in filename and gcor:
                         if 'gcor' in filename:
                             filePath = os.path.join(folder, filename)
-                            zipObj.write(filePath,basename(filename))
+                            zipObj.write(filePath,basename(filename.replace('_gcor','')))
 
 
     def run(self):
