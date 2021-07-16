@@ -238,6 +238,7 @@ class DxfToShapes:
 
         siren = self.dockwidget.lineEdit_siren.text()
         operateur = self.dockwidget.lineEdit_operateur.text()
+        aer_sout = self.dockwidget.checkBox_aer_sout.isChecked()
         t0 = time.time()
         list_dxf = self.dockwidget.mComboBox_input.checkedItems()
         models = {}
@@ -266,8 +267,7 @@ class DxfToShapes:
                 os.mkdir(folder + '\\' 'ORANGE')
 
             print(dxf, results['nb_layers'])
-            if results['nb_layers'] == 3:
-                print('GC')
+            if aer_sout:
 
                 feedback = QgsProcessingFeedback()
                 context = QgsProcessingContext()
@@ -278,53 +278,18 @@ class DxfToShapes:
                 'refcommande': str(utils.GROUP_NAME),
                 'operateur':str(operateur),
                 'siren':str(siren),
-                'export_support': folder + '\\GEOPACKAGE\\' + 'export_support.gpkg',
-                'export_support_gcor': folder + '\\GEOPACKAGE\\' + 'export_support_gcor.gpkg',
-                'export_cable': folder + '\\GEOPACKAGE\\' + 'export_cable.gpkg',
-                'export_cable_gcor': folder + '\\GEOPACKAGE\\' + 'export_cable_gcor.gpkg',
-                'export_bpe': folder + '\\GEOPACKAGE\\' + 'export_bpe.gpkg'
+                'export_support': folder + '\\GEOPACKAGE\\' + 'export_support_gc.gpkg',
+                'export_support_gcor': folder + '\\GEOPACKAGE\\' + 'export_support_gc_gcor.gpkg',
+                'export_cable': folder + '\\GEOPACKAGE\\' + 'export_cable_gc.gpkg',
+                'export_cable_gcor': folder + '\\GEOPACKAGE\\' + 'export_cable_gc_gcor.gpkg',
+                'export_bpe': folder + '\\GEOPACKAGE\\' + 'export_bpe_gc.gpkg'
 
                 } #add your parameters here
                 models['GC'].initAlgorithm()
 
                 outputs['GC'] = models['GC'].processAlgorithm(parameters, context, feedback)
 
-                export_support = QgsVectorLayer(outputs['GC']['export_support'], 'export_support', 'ogr')
-                utils.PROJECT.addMapLayer(export_support, False)
-                utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_support))
-                export_support.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_gc.qml')
-                export_support.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
 
-                export_support_gcor = QgsVectorLayer(outputs['GC']['export_support_gcor'], 'export_support_gcor', 'ogr')
-                utils.PROJECT.addMapLayer(export_support_gcor, False)
-                utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_support_gcor))
-                export_support_gcor.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_gc.qml')
-                export_support_gcor.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
-
-                export_cable = QgsVectorLayer(outputs['GC']['export_cable'], 'export_cable', 'ogr')
-                utils.PROJECT.addMapLayer(export_cable, False)
-                utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable))
-                export_cable.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable.qml')
-                export_cable.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
-
-                export_cable_gcor = QgsVectorLayer(outputs['GC']['export_cable_gcor'], 'export_cable_gcor', 'ogr')
-                utils.PROJECT.addMapLayer(export_cable_gcor, False)
-                utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable_gcor))
-                export_cable_gcor.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable_gcor.qml')
-                export_cable_gcor.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
-
-                export_bpe = QgsVectorLayer(outputs['GC']['export_bpe'], 'export_bpe', 'ogr')
-                utils.PROJECT.addMapLayer(export_bpe, False)
-                utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_bpe))
-                export_bpe.loadNamedStyle(utils.DIR_STYLES + os.sep +  'bpe.qml')
-                export_bpe.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
-
-
-
-
-
-            if results['nb_layers'] == 2:
-                print('AER')
                 feedback = QgsProcessingFeedback()
                 context = QgsProcessingContext()
                 parameters = {
@@ -333,42 +298,189 @@ class DxfToShapes:
                 'refcommande': str(utils.GROUP_NAME),
                 'operateur':str(operateur),
                 'siren':str(siren),
-                'export_support': folder + '\\GEOPACKAGE\\' + 'export_support.gpkg',
-                'export_support_gcor': folder + '\\GEOPACKAGE\\' + 'export_support_gcor.gpkg',
-                'export_cable': folder + '\\GEOPACKAGE\\' + 'export_cable.gpkg',
-                'export_cable_gcor': folder + '\\GEOPACKAGE\\' + 'export_cable_gcor.gpkg',
-                'export_bpe': folder + '\\GEOPACKAGE\\' + 'export_bpe.gpkg'
+                'export_support': folder + '\\GEOPACKAGE\\' + 'export_support_aer.gpkg',
+                'export_support_gcor': folder + '\\GEOPACKAGE\\' + 'export_support_aer_gcor.gpkg',
+                'export_cable': folder + '\\GEOPACKAGE\\' + 'export_cable_aer.gpkg',
+                'export_cable_gcor': folder + '\\GEOPACKAGE\\' + 'export_cable_aer_gcor.gpkg',
+                'export_bpe': folder + '\\GEOPACKAGE\\' + 'export_bpe_aer.gpkg'
 
                 } #add your parameters here
                 models['AER'].initAlgorithm()
 
-                models['AER'].processAlgorithm(parameters, context, feedback)
+                outputs['AER'] = models['AER'].processAlgorithm(parameters, context, feedback)
 
-                export_support_gcor = None
-                export_support = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_support.gpkg', 'export_support', 'ogr')
+
+                alg_params = {
+                    'CRS': QgsCoordinateReferenceSystem('EPSG:2154'),
+                    'LAYERS': [outputs['GC']['export_support'],outputs['AER']['export_support']] ,
+                    'OUTPUT': folder + '\\GEOPACKAGE\\' + 'export_support.gpkg',
+                }
+                outputs['export_support'] = processing.run('qgis:mergevectorlayers', alg_params)
+
+
+                alg_params = {
+                    'CRS': QgsCoordinateReferenceSystem('EPSG:2154'),
+                    'LAYERS': [outputs['GC']['export_cable'],outputs['AER']['export_cable']] ,
+                    'OUTPUT': folder + '\\GEOPACKAGE\\' + 'export_cable.gpkg',
+                }
+                outputs['export_cable'] = processing.run('qgis:mergevectorlayers', alg_params)
+
+                alg_params = {
+                    'CRS': QgsCoordinateReferenceSystem('EPSG:2154'),
+                    'LAYERS': [outputs['GC']['export_cable_gcor'],outputs['AER']['export_cable_gcor']] ,
+                    'OUTPUT': folder + '\\GEOPACKAGE\\' + 'export_cable_gcor.gpkg',
+                }
+                outputs['export_cable_gcor'] = processing.run('qgis:mergevectorlayers', alg_params)
+
+                alg_params = {
+                    'CRS': QgsCoordinateReferenceSystem('EPSG:2154'),
+                    'LAYERS': [outputs['GC']['export_bpe'],outputs['AER']['export_bpe']] ,
+                    'OUTPUT': folder + '\\GEOPACKAGE\\' + 'export_bpe.gpkg',
+                }
+                outputs['export_bpe'] = processing.run('qgis:mergevectorlayers', alg_params)
+
+
+                export_support = QgsVectorLayer(outputs['export_support']['OUTPUT'], 'export_support', 'ogr')
                 utils.PROJECT.addMapLayer(export_support, False)
                 utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_support))
-                export_support.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_aer.qml')
+                export_support.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_aer_gc.qml')
                 export_support.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
 
+                export_support_gcor = QgsVectorLayer(outputs['GC']['export_support_gcor'], 'export_support_gcor', 'ogr')
+                utils.PROJECT.addMapLayer(export_support_gcor, False)
+                utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_support_gcor))
+                export_support_gcor.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_aer_gc.qml')
+                export_support_gcor.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
 
-                export_cable = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_cable.gpkg', 'export_cable', 'ogr')
+                export_cable = QgsVectorLayer(outputs['export_cable']['OUTPUT'], 'export_cable', 'ogr')
                 utils.PROJECT.addMapLayer(export_cable, False)
                 utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable))
                 export_cable.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable.qml')
                 export_cable.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
 
-                export_cable_gcor = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_cable_gcor.gpkg', 'export_cable_gcor', 'ogr')
+                export_cable_gcor = QgsVectorLayer(outputs['export_cable_gcor']['OUTPUT'], 'export_cable_gcor', 'ogr')
                 utils.PROJECT.addMapLayer(export_cable_gcor, False)
                 utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable_gcor))
                 export_cable_gcor.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable_gcor.qml')
                 export_cable_gcor.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
 
-                export_bpe = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_bpe.gpkg', 'export_bpe', 'ogr')
+                export_bpe = QgsVectorLayer(outputs['export_bpe']['OUTPUT'], 'export_bpe', 'ogr')
                 utils.PROJECT.addMapLayer(export_bpe, False)
                 utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_bpe))
                 export_bpe.loadNamedStyle(utils.DIR_STYLES + os.sep +  'bpe.qml')
                 export_bpe.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+
+
+
+
+            else:
+                if results['nb_layers'] == 3:
+                    print('GC')
+
+                    feedback = QgsProcessingFeedback()
+                    context = QgsProcessingContext()
+                    parameters = {
+                    'cables':results['layers']['LineString'],
+                    'chambres':results['layers']['Polygon'],
+                    'etiquettes':results['layers']['Point'],
+                    'refcommande': str(utils.GROUP_NAME),
+                    'operateur':str(operateur),
+                    'siren':str(siren),
+                    'export_support': folder + '\\GEOPACKAGE\\' + 'export_support.gpkg',
+                    'export_support_gcor': folder + '\\GEOPACKAGE\\' + 'export_support_gcor.gpkg',
+                    'export_cable': folder + '\\GEOPACKAGE\\' + 'export_cable.gpkg',
+                    'export_cable_gcor': folder + '\\GEOPACKAGE\\' + 'export_cable_gcor.gpkg',
+                    'export_bpe': folder + '\\GEOPACKAGE\\' + 'export_bpe.gpkg'
+
+                    } #add your parameters here
+                    models['GC'].initAlgorithm()
+
+                    outputs['GC'] = models['GC'].processAlgorithm(parameters, context, feedback)
+
+
+
+
+                    export_support = QgsVectorLayer(outputs['GC']['export_support'], 'export_support', 'ogr')
+                    utils.PROJECT.addMapLayer(export_support, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_support))
+                    export_support.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_gc.qml')
+                    export_support.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+                    export_support_gcor = QgsVectorLayer(outputs['GC']['export_support_gcor'], 'export_support_gcor', 'ogr')
+                    utils.PROJECT.addMapLayer(export_support_gcor, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_support_gcor))
+                    export_support_gcor.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_gc.qml')
+                    export_support_gcor.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+                    export_cable = QgsVectorLayer(outputs['GC']['export_cable'], 'export_cable', 'ogr')
+                    utils.PROJECT.addMapLayer(export_cable, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable))
+                    export_cable.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable.qml')
+                    export_cable.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+                    export_cable_gcor = QgsVectorLayer(outputs['GC']['export_cable_gcor'], 'export_cable_gcor', 'ogr')
+                    utils.PROJECT.addMapLayer(export_cable_gcor, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable_gcor))
+                    export_cable_gcor.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable_gcor.qml')
+                    export_cable_gcor.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+                    export_bpe = QgsVectorLayer(outputs['GC']['export_bpe'], 'export_bpe', 'ogr')
+                    utils.PROJECT.addMapLayer(export_bpe, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_bpe))
+                    export_bpe.loadNamedStyle(utils.DIR_STYLES + os.sep +  'bpe.qml')
+                    export_bpe.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+
+
+
+
+                if results['nb_layers'] == 2:
+                    print('AER')
+                    feedback = QgsProcessingFeedback()
+                    context = QgsProcessingContext()
+                    parameters = {
+                    'cables':results['layers']['LineString'],
+                    'etiquettes':results['layers']['Point'],
+                    'refcommande': str(utils.GROUP_NAME),
+                    'operateur':str(operateur),
+                    'siren':str(siren),
+                    'export_support': folder + '\\GEOPACKAGE\\' + 'export_support.gpkg',
+                    'export_support_gcor': folder + '\\GEOPACKAGE\\' + 'export_support_gcor.gpkg',
+                    'export_cable': folder + '\\GEOPACKAGE\\' + 'export_cable.gpkg',
+                    'export_cable_gcor': folder + '\\GEOPACKAGE\\' + 'export_cable_gcor.gpkg',
+                    'export_bpe': folder + '\\GEOPACKAGE\\' + 'export_bpe.gpkg'
+
+                    } #add your parameters here
+                    models['AER'].initAlgorithm()
+
+                    models['AER'].processAlgorithm(parameters, context, feedback)
+
+                    export_support_gcor = None
+                    export_support = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_support.gpkg', 'export_support', 'ogr')
+                    utils.PROJECT.addMapLayer(export_support, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_support))
+                    export_support.loadNamedStyle(utils.DIR_STYLES + os.sep +  'support_aer.qml')
+                    export_support.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+
+                    export_cable = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_cable.gpkg', 'export_cable', 'ogr')
+                    utils.PROJECT.addMapLayer(export_cable, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable))
+                    export_cable.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable.qml')
+                    export_cable.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+                    export_cable_gcor = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_cable_gcor.gpkg', 'export_cable_gcor', 'ogr')
+                    utils.PROJECT.addMapLayer(export_cable_gcor, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_cable_gcor))
+                    export_cable_gcor.loadNamedStyle(utils.DIR_STYLES + os.sep +  'cable_gcor.qml')
+                    export_cable_gcor.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
+
+                    export_bpe = QgsVectorLayer(folder + '\\GEOPACKAGE\\' + 'export_bpe.gpkg', 'export_bpe', 'ogr')
+                    utils.PROJECT.addMapLayer(export_bpe, False)
+                    utils.GROUP_LAYER_GEOPACKAGE.insertChildNode(0, QgsLayerTreeLayer(export_bpe))
+                    export_bpe.loadNamedStyle(utils.DIR_STYLES + os.sep +  'bpe.qml')
+                    export_bpe.saveStyleToDatabase(name="default",description="Visualisation", useAsDefault=True, uiFileContent="")
 
             alg_params = {
                 'INPUT': export_support,
